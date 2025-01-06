@@ -1,0 +1,32 @@
+---
+import "gsap";
+---
+
+<div class="overflow-hidden w-screen">
+  <div class="marquee flex whitespace-nowrap">
+    <span>Nature • Vibrant • Wellness • Community •</span>
+    <span>Nature • Vibrant • Wellness • Community •</span>
+  </div>
+</div>
+
+<script>
+  import { gsap } from "gsap";
+
+  const marquee = document.querySelector(".marquee") as HTMLDivElement;
+  const width = marquee.scrollWidth / 2;
+
+  gsap.to(marquee, {
+    x: `-${width}px`,
+    duration: 30,
+    repeat: -1,
+    ease: "linear",
+  });
+</script>
+
+<style>
+  .marquee span {
+    font-size: 8rem;
+    padding-right: 1rem;
+    color: #ffff;
+  }
+</style>
