@@ -9,6 +9,15 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.1.2"
+    "@astrojs/tailwind": "^5.1.4",
+    "@fontsource-variable/quicksand": "^5.1.1",
+    "astro": "^5.1.2",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.18",
+    "locomotive-scroll": "^4.1.4",
+    "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "@types/locomotive-scroll": "^4.1.4"
   }
 }
