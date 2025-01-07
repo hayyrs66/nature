@@ -1,0 +1,39 @@
+<section class="w-full h-full">
+    <div class="grid grid-cols-[1fr_2fr]">
+        
+    </div>
+</section>
+
+<script type="module">
+    import Lenis from "../../node_modules/lenis";
+  
+    const lenis = new Lenis({
+      duration: 1.2,
+      lerp: 0.1,
+      smoothWheel: true,
+    });
+  
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+  
+    requestAnimationFrame(raf);
+  
+    lenis.on("scroll", () => {
+      const container = document.querySelector(".slow-element");
+      const img = container.querySelector(".parallax-img");
+  
+      const containerTop = container.getBoundingClientRect().top;
+      const containerHeight = container.offsetHeight;
+      const windowHeight = window.innerHeight;
+  
+      if (containerTop < windowHeight && containerTop + containerHeight > 0) {
+        const progress =
+          (windowHeight - containerTop) / (windowHeight + containerHeight);
+        const parallaxOffset = (progress - 0.7) * 500;
+        img.style.transform = `translateY(${parallaxOffset}px)`;
+      }
+    });
+  </script>
+  
