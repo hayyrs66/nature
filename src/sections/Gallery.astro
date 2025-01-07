@@ -1,0 +1,62 @@
+<section id="scroll-gallery" class="relative w-full h-[300vh]">
+  <div class="sticky top-0 w-full h-screen overflow-hidden">
+    <img
+      id="image1"
+      class="absolute inset-0 w-full h-full object-cover z-0
+               transition-transform duration-700 ease-in-out
+               translate-y-0"
+      src="nature.jpg"
+      alt="Nature 1"
+    />
+
+    <img
+      id="image2"
+      class="absolute inset-0 w-full h-full object-cover z-10
+               transition-transform duration-700 ease-in-out
+               translate-y-full"
+      src="nature-2.jpg"
+      alt="Nature 2"
+    />
+
+    <img
+      id="image3"
+      class="absolute inset-0 w-full h-full object-cover z-20
+               transition-transform duration-700 ease-in-out
+               translate-y-full"
+      src="nature-4.jpg"
+      alt="Nature 3"
+    />
+  </div>
+</section>
+
+<script is:inline>
+  window.addEventListener("scroll", () => {
+    const section = document.getElementById("scroll-gallery");
+    const scrollTop = window.scrollY || window.pageYOffset;
+    const viewportHeight = window.innerHeight;
+    const sectionOffset = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+
+    let progress =
+      (scrollTop - sectionOffset) / (sectionHeight - viewportHeight);
+    progress = Math.max(0, Math.min(1, progress));
+
+    const image1 = document.getElementById("image1");
+    const image2 = document.getElementById("image2");
+    const image3 = document.getElementById("image3");
+
+    if (progress < 0.33) {
+      image1.style.transform = "translateY(0)";
+      image2.style.transform = "translateY(100%)";
+      image3.style.transform = "translateY(100%)";
+    } else if (progress < 0.66) {
+      image1.style.transform = "translateY(0)";
+      image2.style.transform = "translateY(0)";
+      image3.style.transform = "translateY(100%)";
+    } else {
+      image1.style.transform = "translateY(0)";
+      image2.style.transform = "translateY(0)";
+      image3.style.transform = "translateY(0)";
+    }
+  });
+</script>
