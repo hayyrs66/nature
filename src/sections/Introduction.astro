@@ -1,7 +1,7 @@
 <section class="w-screen h-full bg-[#2b352c] px-12">
   <div class="grid grid-cols-[1fr_2fr] pt-36">
     <div></div>
-    <div class="w-full h-[400px] overflow-hidden relative slow-element">
+    <div class="w-full h-[600px] overflow-hidden relative slow-element">
       <img
         src="/nature.jpg"
         alt="Photo of nature"
@@ -38,7 +38,7 @@
     if (containerTop < windowHeight && containerTop + containerHeight > 0) {
       const progress =
         (windowHeight - containerTop) / (windowHeight + containerHeight);
-      const parallaxOffset = (progress - 0.7) * 200; // Adjust speed factor
+      const parallaxOffset = (progress - 0.7) * 500;
       img.style.transform = `translateY(${parallaxOffset}px)`;
     }
   });
