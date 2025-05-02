@@ -1,12 +1,35 @@
 <section id="scroll-gallery" class="relative w-full h-[300vh]">
-  <!-- card -->
-  <div class="fixed w-[400px] h-screen z-[100] top-0 left-0 bg-[#D1CCBF]">
-    <!-- Card content goes here -->
-    <h2 class="p-4 text-black text-xl font-bold">Fixed Card</h2>
-  </div>
-  <!-- /card -->
-
   <div class="sticky top-0 w-full h-screen overflow-hidden">
+    <!-- Polaroid-style card with image and text -->
+    <div
+      id="image-card"
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30
+                             bg-[#d1ccbf] rounded-sm shadow-xl w-80 h-[26rem] overflow-hidden
+                             will-change-transform
+                             [transform-style:preserve-3d] [backface-visibility:hidden]
+                             flex flex-col border-[10px] border-[#d1ccbf]"
+    >
+      <div class="flex-1 overflow-hidden">
+        <img
+          id="card-image"
+          class="w-full h-full object-cover"
+          src="nature.jpg"
+          alt="Current Nature Image"
+        />
+      </div>
+      <div class="p-4 pb-6 bg-[#d1ccbf] flex flex-col items-start">
+        <h3 id="card-title" class="text-xl mb-1 text-black uppercase">
+          FANTASY
+        </h3>
+        <p
+          id="card-description"
+          class="text-sm text-left text-gray-600"
+        >
+          Captured this magical moment during our hike last weekend
+        </p>
+      </div>
+    </div>
+
     <img
       id="image1"
       class="absolute inset-0 w-full h-full object-cover z-0
@@ -36,6 +59,94 @@
   </div>
 </section>
 
+<script>
+  // Import GSAP
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  // Register ScrollTrigger with GSAP
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Wait for DOM to be fully loaded
+  document.addEventListener("DOMContentLoaded", () => {
+    const section = document.getElementById("scroll-gallery");
+    const card = document.getElementById("image-card");
+    const cardImage = document.getElementById("card-image");
+    const cardTitle = document.getElementById("card-title");
+    const cardDescription = document.getElementById("card-description");
+
+    // Content for each image
+    const imageContent = [
+      {
+        src: "nature.jpg",
+        title: "FANTASY",
+        description:
+          "Captured this magical moment during our hike last weekend",
+      },
+      {
+        src: "nature-2.jpg",
+        title: "Mountain Valley",
+        description: "The view from the top was absolutely breathtaking",
+      },
+      {
+        src: "nature-4.jpg",
+        title: "Sunset Horizon",
+        description:
+          "Golden hour never disappoints. Worth every minute of waiting",
+      },
+    ];
+
+    // Set up parallax effect for the card
+    gsap.to(card, {
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true,
+        onUpdate: (self) => {
+          // Calculate which image is currently visible
+          const progress = self.progress;
+          let contentIndex = 0;
+
+          if (progress < 0.33) {
+            contentIndex = 0;
+          } else if (progress < 0.66) {
+            contentIndex = 1;
+          } else {
+            contentIndex = 2;
+          }
+
+          // Update image and text content
+          if (cardImage) {
+            (cardImage as HTMLImageElement).src =
+              imageContent[contentIndex].src;
+          }
+          if (cardTitle) {
+            cardTitle.textContent = imageContent[contentIndex].title;
+          }
+          if (cardDescription) {
+            cardDescription.textContent =
+              imageContent[contentIndex].description;
+          }
+
+          // Add a floating parallax effect to the card with improved rendering
+          const yMovement = (self.progress - 0.5) * 50; // -25px to +25px movement
+          const rotation = (self.progress - 0.5) * 5; // Subtle rotation
+
+          gsap.set(card, {
+            y: `calc(-50% + ${yMovement}px)`,
+            rotation: rotation,
+            rotationY: rotation * 0.7, // Add a slight 3D rotation for a more physical feel
+            scale: 1 + Math.abs(self.progress - 0.5) * 0.1,
+            force3D: true,
+            rotationZ: 0.01,
+            clearProps: "",
+          });
+        },
+      },
+    });
+  });
+</script>
 
 <script is:inline>
   window.addEventListener("scroll", () => {
