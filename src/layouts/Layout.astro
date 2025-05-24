@@ -8,7 +8,7 @@ import "lenis/dist/lenis.css";
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>Nature</title>
@@ -16,12 +16,16 @@ import "lenis/dist/lenis.css";
   <body>
     <Header />
     <slot />
-
     <script type="module" defer>
       import Lenis from "lenis";
-      const lenis = new Lenis({
-        autoRaf: true,
-      });
+
+      if (typeof window !== "undefined") {
+        const lenis = new Lenis({
+          autoRaf: true,
+          smoothWheel: true,
+          touchMultiplier: 2,
+        });
+      }
     </script>
   </body>
 </html>
@@ -41,7 +45,8 @@ import "lenis/dist/lenis.css";
     scroll-behavior: auto;
   }
   body {
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
     font-family: "Quicksand Variable", sans-serif;
   }
 </style>
