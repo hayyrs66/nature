@@ -22,37 +22,39 @@
     </div>
   </section>
   
-  <script type="module">
-    import Lenis from "../../node_modules/lenis";
-  
+  <script type="module" is:inline>
+  import Lenis from "https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/+esm";
+
+  if (typeof window !== "undefined") {
     const lenis = new Lenis({
       duration: 1.2,
       lerp: 0.1,
       smoothWheel: true,
+      smoothTouch: true, // Enable smooth on mobile
+      touchMultiplier: 2, // Optional: makes touch scroll more responsive
     });
-  
+
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
-  
+
     requestAnimationFrame(raf);
-  
 
     lenis.on("scroll", () => {
-    const container = document.querySelector(".slow-element-lore");
-    const img = container.querySelector(".parallax-img-lore");
-
-    const containerTop = container.getBoundingClientRect().top;
-    const containerHeight = container.offsetHeight;
-    const windowHeight = window.innerHeight;
-
-    if (containerTop < windowHeight && containerTop + containerHeight > 0) {
-      const progress =
-        (windowHeight - containerTop) / (windowHeight + containerHeight);
-      const parallaxOffset = (progress - 0.7) * 200;
-      img.style.transform = `translateY(${parallaxOffset}px)`;
-    }
-  });
-  </script>
-  
+      const container = document.querySelector(".slow-element-lore");
+      if (!container) return;
+      const img = container.querySelector(".parallax-img-lore");
+      if (!img) return;
+      const containerTop = container.getBoundingClientRect().top;
+      const containerHeight = container.offsetHeight;
+      const windowHeight = window.innerHeight;
+      if (containerTop < windowHeight && containerTop + containerHeight > 0) {
+        const progress =
+          (windowHeight - containerTop) / (windowHeight + containerHeight);
+        const parallaxOffset = (progress - 0.7) * 200;
+        img.style.transform = `translateY(${parallaxOffset}px)`;
+      }
+    });
+  }
+</script>
