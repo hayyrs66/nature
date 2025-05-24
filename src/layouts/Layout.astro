@@ -16,17 +16,6 @@ import "lenis/dist/lenis.css";
   <body>
     <Header />
     <slot />
-    <script type="module" defer>
-      import Lenis from "lenis";
-
-      if (typeof window !== "undefined") {
-        const lenis = new Lenis({
-          autoRaf: true,
-          smoothWheel: true,
-          touchMultiplier: 2,
-        });
-      }
-    </script>
   </body>
 </html>
 <style>
@@ -47,6 +36,11 @@ import "lenis/dist/lenis.css";
   body {
     overflow-x: hidden;
     overflow-y: hidden;
+
+    @media (max-width: 768px) {
+      overflow-y: auto;
+    }
+
     font-family: "Quicksand Variable", sans-serif;
   }
 </style>
